@@ -17,6 +17,7 @@ class BodilyCalculatorScreen extends StatefulWidget {
 class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
   late TextEditingController bbController = TextEditingController();
   late TextEditingController tbController = TextEditingController();
+  late TextEditingController namaController = TextEditingController();
   late var tinggiBadan;
   late var beratBadan;
   late String nama;
@@ -50,7 +51,39 @@ class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
                    height: 15,
                  ),
                  Text(
-                   "Select your gender",
+                   "Hi there Bodipal! \nWhat's your name?",
+                   textAlign: TextAlign.center,
+                   style: TextStyle(
+                     color: Colors.pinkAccent,
+                     fontWeight: FontWeight.normal,
+                     fontSize: 20,
+                   ),
+                 ),
+                 Lottie.asset(
+                   "assets/lottie/womenandmen.json",
+                   height: 200,
+                 ),
+                 TextFormField(
+                     controller: namaController,
+                     decoration: InputDecoration(
+                       hintText: "Maximum character is 30",
+                       labelText: "Name",
+                       hintStyle: TextStyle(color: Colors.grey),
+                     ),
+                     keyboardType: TextInputType.name,
+                     inputFormatters: <TextInputFormatter>[
+                       FilteringTextInputFormatter.singleLineFormatter,
+                       LengthLimitingTextInputFormatter(30)
+                     ],
+                     onChanged: (tb){
+                       nama = namaController.text;
+                     }
+                 ),
+                 SizedBox(
+                   height: 80,
+                 ),
+                 Text(
+                   "Are you a boy or a girl?",
                    textAlign: TextAlign.center,
                    style: TextStyle(
                      color: Colors.black54,
@@ -118,7 +151,7 @@ class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
                    ],
                  ),
                  SizedBox(
-                   height: 100,
+                   height: 80,
                  ),
                  Text(
                    "Next, put down your body weight",
@@ -152,7 +185,7 @@ class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
                      }
                  ),
                  SizedBox(
-                   height: 100,
+                   height: 80,
                  ),
                  Text(
                    "And now, put down your body height",
@@ -186,7 +219,7 @@ class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
                      }
                  ),
                  SizedBox(
-                   height: 100,
+                   height: 80,
                  ),
                  ZoomTapAnimation(child:
                     Container(
@@ -208,27 +241,27 @@ class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
                              if(_bmi >= 18.5 && _bmi <= 25){
                                // Berat badan normal
 
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Normal", indicator: "assets/gif/normal.gif", gender: jenisKelamin);
+                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Normal", indicator: "assets/gif/normal.gif", gender: jenisKelamin, name: nama);
                              }
                              else if(_bmi < 18.5){
                                // Berat badan kurang
 
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Underweight", indicator: "assets/gif/underweight.gif", gender: jenisKelamin);
+                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Underweight", indicator: "assets/gif/underweight.gif", gender: jenisKelamin, name: nama);
                              }
                              else if(_bmi > 25 && _bmi <= 30){
                                // Berat badan overweight
 
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Overweight", indicator: "assets/gif/overweight.gif", gender: jenisKelamin);
+                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Overweight", indicator: "assets/gif/overweight.gif", gender: jenisKelamin, name: nama);
                              }
                              else{
                                // Berat badan obesitas
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Obessed", indicator: "assets/gif/obessed.gif", gender: jenisKelamin);
+                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Obessed", indicator: "assets/gif/obessed.gif", gender: jenisKelamin, name: nama);
                              }
 
                              tbController.text = "";
                              bbController.text = "";
                              Navigator.push(context, MaterialPageRoute(
-                                 builder: (context) => BodilyResultScreen(ResultModel: bodilyModel, bmi: bodilyModel.bmi, indicator: bodilyModel.indicator, status: bodilyModel.status)
+                                 builder: (context) => BodilyResultScreen(ResultModel: bodilyModel, bmi: bodilyModel.bmi, indicator: bodilyModel.indicator, status: bodilyModel.status, name: bodilyModel.name)
                              ));
                            });
                            print("${jenisKelamin} = jenis kelamin");

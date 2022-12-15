@@ -8,12 +8,14 @@ class BodilyResultScreen extends StatelessWidget {
   final bmi;
   final status;
   final indicator;
+  final name;
 
   BodilyResultScreen({
     this.ResultModel,
     this.bmi,
     this.indicator,
-    this.status
+    this.status,
+    this.name
   });
 
   @override

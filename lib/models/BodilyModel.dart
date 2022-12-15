@@ -6,6 +6,7 @@ class BodilyModel{
   var status;
   var indicator;
   var gender;
+  var name;
 
-  BodilyModel({this.bmi, this.status, this.indicator, this.gender});
+  BodilyModel({this.bmi, this.status, this.indicator, this.gender, this.name});
 }
