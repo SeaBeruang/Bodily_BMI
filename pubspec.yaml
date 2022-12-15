@@ -75,6 +75,12 @@ flutter:
     - family: wakuwaku
       fonts:
         - asset: assets/fonts/wakuwaku.otf
+    - family: pacifico
+      fonts:
+        - asset: assets/fonts/pacifico.ttf
+    - family: chicle
+      fonts:
+        - asset: assets/fonts/chicle.ttf
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

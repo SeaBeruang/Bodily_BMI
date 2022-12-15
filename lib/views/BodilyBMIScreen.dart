@@ -19,6 +19,7 @@ class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
   late TextEditingController tbController = TextEditingController();
   late var tinggiBadan;
   late var beratBadan;
+  late String nama;
   late String jenisKelamin;
   late BodilyModel bodilyModel;
   double _bmi = 0;
