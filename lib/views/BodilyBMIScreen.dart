@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import 'package:bodily_bmi_calculator/views/BodilyResultScreen.dart';
 import 'package:bodily_bmi_calculator/models/BodilyModel.dart';
-import 'package:bodily_bmi_calculator/widgets/Widgets.dart';
+import 'package:bodily_bmi_calculator/helper/helper.dart';
 
 class BodilyCalculatorScreen extends StatefulWidget {
   const BodilyCalculatorScreen({Key? key}) : super(key: key);
@@ -233,37 +232,47 @@ class _BodilyCalculatorScreenState extends State<BodilyCalculatorScreen>{
                            ),
                          ),
                          onPressed: () {
-                           // Navigasi ke halaman Result
-                           setState(() {
-                             _bmi = beratBadan/((tinggiBadan/100)*(tinggiBadan/100));
-                             print(_bmi);
+                           // Validasi
 
-                             if(_bmi >= 18.5 && _bmi <= 25){
-                               // Berat badan normal
+                           if(namaController.text == "" || bbController.text == "" || tbController.text == "" ||
+                           namaController.text.isEmpty || bbController.text.isEmpty || tbController.text.isEmpty){
+                             print("Please fill all data 😥");
+                           } else {
+                             setState(() {
+                               _bmi = beratBadan/((tinggiBadan/100)*(tinggiBadan/100));
+                               print(_bmi);
 
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Normal", indicator: "assets/gif/normal.gif", gender: jenisKelamin, name: nama);
-                             }
-                             else if(_bmi < 18.5){
-                               // Berat badan kurang
+                               if(_bmi >= 18.5 && _bmi <= 25){
+                                 // 1. Berat badan normal
 
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Underweight", indicator: "assets/gif/underweight.gif", gender: jenisKelamin, name: nama);
-                             }
-                             else if(_bmi > 25 && _bmi <= 30){
-                               // Berat badan overweight
+                                 bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Normal", indicator: "assets/gif/normal.gif", gender: jenisKelamin, name: nama);
+                               }
+                               else if(_bmi < 18.5){
+                                 // 2. Berat badan kurang
 
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Overweight", indicator: "assets/gif/overweight.gif", gender: jenisKelamin, name: nama);
-                             }
-                             else{
-                               // Berat badan obesitas
-                               bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Obessed", indicator: "assets/gif/obessed.gif", gender: jenisKelamin, name: nama);
-                             }
+                                 bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Underweight", indicator: "assets/gif/underweight.gif", gender: jenisKelamin, name: nama);
+                               }
+                               else if(_bmi > 25 && _bmi <= 30){
+                                 // 3. Berat badan overweight
 
-                             tbController.text = "";
-                             bbController.text = "";
-                             Navigator.push(context, MaterialPageRoute(
-                                 builder: (context) => BodilyResultScreen(ResultModel: bodilyModel, bmi: bodilyModel.bmi, indicator: bodilyModel.indicator, status: bodilyModel.status, name: bodilyModel.name)
-                             ));
-                           });
+                                 bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Overweight", indicator: "assets/gif/overweight.gif", gender: jenisKelamin, name: nama);
+                               }
+                               else{
+                                 // 4. Berat badan obesitas
+                                 bodilyModel = BodilyModel(bmi: double.parse((_bmi).toStringAsFixed(2)), status: "Obessed", indicator: "assets/gif/obessed.gif", gender: jenisKelamin, name: nama);
+                               }
+
+                               // Clear controller
+                               tbController.text = "";
+                               bbController.text = "";
+                               namaController.text = "";
+
+                               // Navigasi ke halaman Result
+                               Navigator.push(context, MaterialPageRoute(
+                                   builder: (context) => BodilyResultScreen(ResultModel: bodilyModel, bmi: bodilyModel.bmi, indicator: bodilyModel.indicator, status: bodilyModel.status, name: bodilyModel.name, gender: bodilyModel.gender)
+                               ));
+                             });
+                           }
                            print("${jenisKelamin} = jenis kelamin");
                            print("${bodilyModel.status} = status");
                            print("${bodilyModel.bmi} = bmi");

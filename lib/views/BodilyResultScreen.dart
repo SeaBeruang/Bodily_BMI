@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bodily_bmi_calculator/views/BodilyBMIScreen.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import 'package:bodily_bmi_calculator/helper/helper.dart';
 
 class BodilyResultScreen extends StatelessWidget {
   final ResultModel;
@@ -9,17 +9,21 @@ class BodilyResultScreen extends StatelessWidget {
   final status;
   final indicator;
   final name;
+  final gender;
 
   BodilyResultScreen({
     this.ResultModel,
     this.bmi,
     this.indicator,
     this.status,
-    this.name
+    this.name,
+    this.gender
   });
 
   @override
   Widget build(BuildContext context) {
+    String descriptions = Descriptions(this.status);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -36,7 +40,7 @@ class BodilyResultScreen extends StatelessWidget {
                     height: 30,
                   ),
                   Text(
-                    "Here's your results",
+                    "${this.name}'s BMI results",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.cyan,
@@ -70,7 +74,7 @@ class BodilyResultScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 60,
                   ),
                   Column(
                     children: [
@@ -78,7 +82,7 @@ class BodilyResultScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "${this.status}",
+                            "Gender: ${this.gender}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.cyan,
@@ -89,13 +93,13 @@ class BodilyResultScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Your BMI is: ",
+                            "BMI : ",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.cyan,
@@ -117,7 +121,32 @@ class BodilyResultScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 250,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    child: Column(
+                      children: [
+                        Text("You're ${this.status}.",
+                          style: TextStyle(
+                              color: Colors.cyan,
+                              fontWeight: FontWeight.bold,
+                          )
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                            "${descriptions}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black54
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                  SizedBox(
+                    height: 50,
                   ),
                   ZoomTapAnimation(child:
                   Container(
